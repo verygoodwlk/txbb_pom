@@ -14,3 +14,16 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:10000/eureka
+
+logging:
+  config: classpath:log4j2.xml
+
+fdfs:
+  serverip: http://192.168.226.180
+  thumb-image:
+    height: 80
+    width: 80
+  tracker-list:
+    - 192.168.226.180:22122
+  pool:
+    jmx-enabled: false

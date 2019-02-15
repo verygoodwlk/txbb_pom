@@ -11,5 +11,9 @@ public interface IUserService {
 
     int regsiter(User user);
 
-    User login(String username, String password);
+    User login(String username, String password, String uuid);
+
+    int updateHeader(String header, String headerCrm, Integer uid);
+
+    User searchByUserName(String username);
 }
