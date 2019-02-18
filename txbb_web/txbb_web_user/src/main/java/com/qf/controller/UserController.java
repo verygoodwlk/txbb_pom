@@ -82,4 +82,19 @@ public class UserController {
         user.setHeaderCrm(fdfsip + "/" + user.getHeaderCrm());
         return ResultData.createSuccResultData(user);
     }
+
+
+    /**
+     * 根据用户id查询用户信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/get")
+    public User queryByid(int id){
+        User user = userService.queryById(id);
+        user.setHeader(fdfsip + "/" + user.getHeader());
+        user.setHeaderCrm(fdfsip + "/" + user.getHeaderCrm());
+        user.setIdcard(fdfsip + "/" + user.getIdcard());
+        return user;
+    }
 }

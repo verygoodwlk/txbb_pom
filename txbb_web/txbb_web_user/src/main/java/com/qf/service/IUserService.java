@@ -16,4 +16,6 @@ public interface IUserService {
     int updateHeader(String header, String headerCrm, Integer uid);
 
     User searchByUserName(String username);
+
+    User queryById(int id);
 }

@@ -106,4 +106,9 @@ public class UserServiceImpl implements IUserService {
         queryWrapper.eq("username", username);
         return userDao.selectOne(queryWrapper);
     }
+
+    @Override
+    public User queryById(int id) {
+        return userDao.selectById(id);
+    }
 }
