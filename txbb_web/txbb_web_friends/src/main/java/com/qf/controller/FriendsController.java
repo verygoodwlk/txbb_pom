@@ -1,6 +1,7 @@
 package com.qf.controller;
 
 import com.qf.entity.FriendRequest;
+import com.qf.entity.Friends;
 import com.qf.entity.ResultData;
 import com.qf.service.IFriendRequestService;
 import com.qf.util.Constact;
@@ -65,5 +66,15 @@ public class FriendsController {
     public ResultData<Boolean> friendRequestHandler(int rid, int status){
         int result = friendRequestService.friendRequestHandler(rid, status);
         return ResultData.createSuccResultData(true);
+    }
+
+    /**
+     * 根据用户id查询好友列表
+     * @return
+     */
+    @RequestMapping("/listByUid")
+    public ResultData<List<Friends>> listByUserId(int uid){
+        List<Friends> friends = friendRequestService.listByUserId(uid);
+        return ResultData.createSuccResultData(friends);
     }
 }

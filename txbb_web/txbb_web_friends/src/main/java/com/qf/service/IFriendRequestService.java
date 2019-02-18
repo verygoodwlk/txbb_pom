@@ -1,6 +1,7 @@
 package com.qf.service;
 
 import com.qf.entity.FriendRequest;
+import com.qf.entity.Friends;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface IFriendRequestService {
     List<FriendRequest> queryFriendRequest(int toid);
 
     int friendRequestHandler(int rid, int status);
+
+    List<Friends> listByUserId(int uid);
 }

@@ -7,8 +7,8 @@ import com.qf.dao.IUserDao;
 import com.qf.entity.User;
 import com.qf.service.IUserService;
 import com.qf.util.MD5Util;
+import com.qf.util.PinyinUtils;
 import com.qf.util.QRCodeUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +71,8 @@ public class UserServiceImpl implements IUserService {
         }
 
         //生成昵称的拼音
+        String pinyin = PinyinUtils.str2Pinyin(user.getNickname());
+        user.setPinyin(pinyin.toUpperCase());
 
         return userDao.insert(user);
     }

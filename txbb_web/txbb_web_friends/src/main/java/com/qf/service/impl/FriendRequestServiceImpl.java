@@ -2,7 +2,9 @@ package com.qf.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qf.dao.IFriendRequestDao;
+import com.qf.dao.IFriendsDao;
 import com.qf.entity.FriendRequest;
+import com.qf.entity.Friends;
 import com.qf.entity.User;
 import com.qf.feign.UserFeign;
 import com.qf.service.IFriendRequestService;
@@ -28,6 +30,9 @@ public class FriendRequestServiceImpl implements IFriendRequestService {
 
     @Autowired
     private UserFeign userFeign;
+
+    @Autowired
+    private IFriendsDao friendsDao;
 
     /**
      * 申请好友
@@ -106,5 +111,29 @@ public class FriendRequestServiceImpl implements IFriendRequestService {
         }
 
         return 1;
+    }
+
+    /**
+     * 查询好友列表
+     * @param uid
+     * @return
+     */
+    @Override
+    public List<Friends> listByUserId(int uid) {
+
+        QueryWrapper<Friends> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid", uid);
+        queryWrapper.ne("status", 2);
+
+        List<Friends> friends = friendsDao.selectList(queryWrapper);
+
+        for (Friends friend : friends) {
+            //根据好友的id查询好友的详细信息
+            User user = userFeign.queryById(friend.getFid());
+            //设置好友的详细信息
+            friend.setFriend(user);
+        }
+
+        return friends;
     }
 }
