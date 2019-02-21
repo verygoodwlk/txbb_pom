@@ -1,0 +1,12 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: web-chat
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10000/eureka
+
+zk:
+  host: 192.168.226.180:2181
