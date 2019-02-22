@@ -1,6 +1,14 @@
 ws:
-  ip: 10.36.142.69
+  ip: 10.36.142.79
   port: 9000
 
 zk:
   host: 192.168.226.180:2181
+
+spring:
+  rabbitmq:
+    host: 192.168.226.180
+    username: admin
+    password: admin
+    port: 5672
+    virtual-host: /admin

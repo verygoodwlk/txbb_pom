@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: web-chat
+  rabbitmq:
+    host: 192.168.226.180
+    username: admin
+    password: admin
+    virtual-host: /admin
+    port: 5672
+
 eureka:
   client:
     service-url:

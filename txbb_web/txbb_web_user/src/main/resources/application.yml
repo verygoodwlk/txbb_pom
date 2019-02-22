@@ -9,6 +9,9 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 192.168.226.180
+
 
 eureka:
   client:
@@ -27,3 +30,4 @@ fdfs:
     - 192.168.226.180:22122
   pool:
     jmx-enabled: false
+

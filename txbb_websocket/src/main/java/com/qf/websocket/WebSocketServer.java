@@ -1,5 +1,7 @@
 package com.qf.websocket;
 
+import com.qf.websocket.handler.ConnWebSocketHandler;
+import com.qf.websocket.handler.HeartWebSocketHandler;
 import com.qf.websocket.handler.TextWebSocketHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -47,6 +49,12 @@ public class WebSocketServer implements CommandLineRunner {
     @Autowired
     private TextWebSocketHandler textWebSocketHandler;
 
+    @Autowired
+    private ConnWebSocketHandler connWebSocketHandler;
+
+    @Autowired
+    private HeartWebSocketHandler heartWebSocketHandler;
+
     /**
      * 初始化WebSocket服务器
      */
@@ -68,7 +76,9 @@ public class WebSocketServer implements CommandLineRunner {
                         //添加一个读超时的处理器, 在10秒钟之内，如果当前这个客户端（channel），没有读取到任何内容，则自动关闭
                         pipeline.addLast(new ReadTimeoutHandler(10, TimeUnit.SECONDS));
                         //自定义WebSocket的文本帧处理器
-                        pipeline.addLast(textWebSocketHandler);
+                        pipeline.addLast(textWebSocketHandler);//验证消息格式
+                        pipeline.addLast(connWebSocketHandler);//处理连接握手
+                        pipeline.addLast(heartWebSocketHandler);//处理心跳消息
                     }
                 });
 

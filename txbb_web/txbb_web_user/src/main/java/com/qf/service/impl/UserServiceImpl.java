@@ -5,11 +5,14 @@ import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.qf.dao.IUserDao;
 import com.qf.entity.User;
+import com.qf.entity.WsMsg;
+import com.qf.feign.ChatFeign;
 import com.qf.service.IUserService;
 import com.qf.util.MD5Util;
 import com.qf.util.PinyinUtils;
 import com.qf.util.QRCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -29,6 +32,12 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private ChatFeign chatFeign;
 
 
     @Override
@@ -86,6 +95,18 @@ public class UserServiceImpl implements IUserService {
 
         if(user != null){
             //TODO 将登录用户和设备进行绑定
+
+            //当前登录的设备号 uuid
+            //当前登录的用户id user.getId();
+            //将用户id 和 设备号保存到redis中，绑定起来
+            String oldCid = (String) redisTemplate.opsForValue().get(user.getId());
+            if(oldCid != null){
+                //通知oldCid设备下线，消息发送给通信微服务
+                WsMsg wsMsg = new WsMsg(-1, -1, 100, oldCid, null);
+                chatFeign.sendMsg(wsMsg);
+            }
+            //将新的用户id和设备id进行绑定
+            redisTemplate.opsForValue().set(user.getId(), uuid);
         }
 
         return user;
