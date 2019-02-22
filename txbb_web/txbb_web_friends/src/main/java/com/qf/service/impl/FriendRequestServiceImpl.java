@@ -6,6 +6,8 @@ import com.qf.dao.IFriendsDao;
 import com.qf.entity.FriendRequest;
 import com.qf.entity.Friends;
 import com.qf.entity.User;
+import com.qf.entity.WsMsg;
+import com.qf.feign.ChatFeign;
 import com.qf.feign.UserFeign;
 import com.qf.service.IFriendRequestService;
 import com.qf.service.IFriendsService;
@@ -30,6 +32,9 @@ public class FriendRequestServiceImpl implements IFriendRequestService {
 
     @Autowired
     private UserFeign userFeign;
+
+    @Autowired
+    private ChatFeign chatFeign;
 
     @Autowired
     private IFriendsDao friendsDao;
@@ -58,6 +63,11 @@ public class FriendRequestServiceImpl implements IFriendRequestService {
         }
 
         //TODO 通知 friendRequest.getToId (被申请者) 有人给他发起了一个好友添加的申请
+
+        //需要发送通知告诉被申请者有人申请添加他为好友
+        int toid = friendRequest.getToid();
+        WsMsg wsMsg = new WsMsg(friendRequest.getFromid(), toid, 101, null, null);
+        chatFeign.sendMsg(wsMsg);
 
         //添加好友申请记录
         return friendRequestDao.insert(friendRequest);

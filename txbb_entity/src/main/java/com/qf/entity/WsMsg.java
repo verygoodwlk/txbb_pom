@@ -25,6 +25,7 @@ public class WsMsg<T> implements Serializable {
      *
      *
      * 100 - 强制设备下线
+     * 101 - 有人申请添加好友
      */
     private int type;
     private String cid;
