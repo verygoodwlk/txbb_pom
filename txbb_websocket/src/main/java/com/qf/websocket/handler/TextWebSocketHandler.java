@@ -29,6 +29,12 @@ public class TextWebSocketHandler extends SimpleChannelInboundHandler<TextWebSoc
         WsMsg wsMsg = null;
         try {
             wsMsg = JSON.parseObject(msg, WsMsg.class);
+            if(wsMsg.getType() != 2){
+                //非心跳消息，就打印一下
+                System.out.println("--------------------------收到一个消息：------------------------------");
+                System.out.println(msg);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

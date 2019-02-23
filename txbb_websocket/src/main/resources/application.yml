@@ -1,5 +1,5 @@
 ws:
-  ip: 10.36.142.76
+  ip: 10.36.142.73
   port: 9000
 
 zk:
@@ -12,3 +12,5 @@ spring:
     password: admin
     port: 5672
     virtual-host: /admin
+  redis:
+    host: 192.168.226.180

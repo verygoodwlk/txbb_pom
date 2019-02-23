@@ -8,6 +8,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,12 +23,21 @@ public class RabbitMsgListener {
     @Autowired
     private ChannelGroupUtil channelGroupUtil;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @RabbitHandler
     public void rabbitHandler(WsMsg wsMsg){
         System.out.println("WeSocet服务器从Rabbitmq上获得消息：" + wsMsg);
 
         //获得设备号
         String cid = wsMsg.getCid();
+
+        if(cid == null){
+            //通过toid 去redis中找到对应的设备号
+            cid = (String) redisTemplate.opsForValue().get(wsMsg.getToid());
+        }
+
         //通过设备号找到Channel对象
         Channel channel = channelGroupUtil.get(cid);
         System.out.println("获得设备对应的Channel对象：" + channel);

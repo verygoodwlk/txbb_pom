@@ -27,6 +27,11 @@ public class RabbitConfig {
         return new Queue("msg_queue_" + ip + ":" + port);
     }
 
+    @Bean
+    public Queue getQueueChat(){
+        return new Queue("chat_queue");
+    }
+
     /**
      * 创建路由
      * @return

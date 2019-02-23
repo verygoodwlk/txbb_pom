@@ -11,6 +11,11 @@ spring:
     port: 5672
   redis:
     host: 192.168.226.180
+  datasource:
+    url: jdbc:mysql:///txbb
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
 
 eureka:
   client:
@@ -19,3 +24,4 @@ eureka:
 
 zk:
   host: 192.168.226.180:2181
+

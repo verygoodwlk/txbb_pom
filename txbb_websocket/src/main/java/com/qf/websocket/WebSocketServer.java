@@ -1,5 +1,6 @@
 package com.qf.websocket;
 
+import com.qf.websocket.handler.ChatWebSocketHandler;
 import com.qf.websocket.handler.ConnWebSocketHandler;
 import com.qf.websocket.handler.HeartWebSocketHandler;
 import com.qf.websocket.handler.TextWebSocketHandler;
@@ -55,6 +56,9 @@ public class WebSocketServer implements CommandLineRunner {
     @Autowired
     private HeartWebSocketHandler heartWebSocketHandler;
 
+    @Autowired
+    private ChatWebSocketHandler chatWebSocketHandler;
+
     /**
      * 初始化WebSocket服务器
      */
@@ -79,6 +83,7 @@ public class WebSocketServer implements CommandLineRunner {
                         pipeline.addLast(textWebSocketHandler);//验证消息格式
                         pipeline.addLast(connWebSocketHandler);//处理连接握手
                         pipeline.addLast(heartWebSocketHandler);//处理心跳消息
+                        pipeline.addLast(chatWebSocketHandler);//处理单聊消息
                     }
                 });
 
