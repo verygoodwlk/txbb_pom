@@ -65,9 +65,9 @@ public class FriendRequestServiceImpl implements IFriendRequestService {
         //TODO 通知 friendRequest.getToId (被申请者) 有人给他发起了一个好友添加的申请
 
         //需要发送通知告诉被申请者有人申请添加他为好友
-        int toid = friendRequest.getToid();
-        WsMsg wsMsg = new WsMsg(friendRequest.getFromid(), toid, 101, null, null);
-        chatFeign.sendMsg(wsMsg);
+//        int toid = friendRequest.getToid();
+//        WsMsg wsMsg = new WsMsg(friendRequest.getFromid(), toid, 101, null, null);
+//        chatFeign.sendMsg(wsMsg);
 
         //添加好友申请记录
         return friendRequestDao.insert(friendRequest);

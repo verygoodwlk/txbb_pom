@@ -32,6 +32,30 @@ public class ResourceController {
     @Value("${fdfs.serverip}")
     private String serverip;
 
+    /**
+     * 上传音频
+     * @return
+     */
+    @RequestMapping("/audio")
+    public ResultData<String> updateAudio(MultipartFile file){
+        try {
+            StorePath result = fastFileStorageClient.uploadFile(
+                    file.getInputStream(),
+                    file.getSize(),
+                    "amr",
+                    null);
+
+            //获得上传的路径
+            String fullpath = result.getFullPath();
+
+            return ResultData.createSuccResultData("http://" + serverip + "/" + fullpath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResultData.createErrorResultData(Constact.ERROR_CODE, "上传失败！");
+    }
+
     @RequestMapping("/img")
     public ResultData<Map> uploadImg(MultipartFile file, Integer uid){
         System.out.println("---->" + uid);

@@ -24,4 +24,5 @@ eureka:
 
 zk:
   host: 192.168.226.180:2181
-
+mybatis-plus:
+  mapper-locations: classpath:com/qf/dao/*.xml

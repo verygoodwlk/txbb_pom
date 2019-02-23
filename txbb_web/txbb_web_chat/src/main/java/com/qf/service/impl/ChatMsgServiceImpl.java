@@ -1,5 +1,6 @@
 package com.qf.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qf.dao.IChatMsgDao;
 import com.qf.entity.WsMsg;
 import com.qf.service.IChatMsgService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author ken
@@ -33,6 +35,11 @@ public class ChatMsgServiceImpl implements IChatMsgService {
     }
 
     @Override
+    public int updateChatStatus2Read(int uid, int fid) {
+        return chatMsgDao.updateStatus2Read(uid, fid);
+    }
+
+    @Override
     public int update(int id, int status) {
         WsMsg wsMsg = chatMsgDao.selectById(id);
         if(wsMsg != null){
@@ -40,5 +47,14 @@ public class ChatMsgServiceImpl implements IChatMsgService {
             return chatMsgDao.updateById(wsMsg);
         }
         return 0;
+    }
+
+    @Override
+    public List<WsMsg> queryAllNoRead(int uid) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("toid", uid);
+        queryWrapper.eq("status", 0);
+        queryWrapper.orderByAsc("stime");//根据时间升序
+        return chatMsgDao.selectList(queryWrapper);
     }
 }

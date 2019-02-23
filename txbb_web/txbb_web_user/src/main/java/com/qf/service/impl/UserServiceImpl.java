@@ -102,7 +102,7 @@ public class UserServiceImpl implements IUserService {
             String oldCid = (String) redisTemplate.opsForValue().get(user.getId());
             if(oldCid != null){
                 //通知oldCid设备下线，消息发送给通信微服务
-                WsMsg wsMsg = new WsMsg(-1, -1, 100, oldCid, null);
+                WsMsg wsMsg = new WsMsg(-1, -1, 100, oldCid, null, 0, 0, null, 0);
                 chatFeign.sendMsg(wsMsg);
             }
             //将新的用户id和设备id进行绑定
