@@ -57,7 +57,8 @@ public class QRCodeUtils {
             Result result=formatReader.decode(binaryBitmap,hints);
             return result.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println("发生了错误");
             return null;
         }
 	}
